@@ -1,0 +1,93 @@
+<UserControl x:Class="ProductPriceCalculator.Views.CompaniesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <StackPanel>
+        <!-- Header -->
+        <TextBlock Text="{Binding HeaderCompanies}"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+        <Rectangle Height="2" Fill="#0078D7" Margin="0,0,0,15"/>
+
+        <!-- Info Banner -->
+        <Border Background="#E6F2FF"
+                BorderBrush="#0078D7"
+                BorderThickness="2"
+                CornerRadius="5"
+                Padding="10"
+                Margin="0,0,0,15">
+            <TextBlock Text="{Binding InfoCompanies}"
+                       TextWrapping="Wrap"
+                       FontWeight="SemiBold"/>
+        </Border>
+
+        <!-- Add New Company Section -->
+        <Border Background="WhiteSmoke"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="5"
+                Padding="15"
+                Margin="0,0,0,20">
+            <StackPanel>
+                <TextBlock Text="{Binding HeaderAddNewCompany}"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+
+                <Label Content="{Binding LabelCompanyName}" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged}"
+                         Height="25"
+                         Margin="0,0,0,10"/>
+
+                <Label Content="{Binding LabelCompanyWebsite}" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding NewCompanyWebsite, UpdateSourceTrigger=PropertyChanged}"
+                         Height="25"
+                         Margin="0,0,0,10"/>
+
+                <Label Content="{Binding LabelCompanyContact}" FontWeight="SemiBold"/>
+                <TextBox Text="{Binding NewCompanyContactInfo, UpdateSourceTrigger=PropertyChanged}"
+                         Height="60"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         Margin="0,0,0,10"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Current Companies List -->
+        <TextBlock Text="{Binding HeaderCurrentCompanies}"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+        <DataGrid ItemsSource="{Binding Companies}"
+                  SelectedItem="{Binding SelectedCompany}"
+                  AutoGenerateColumns="False"
+                  Height="250"
+                  Margin="0,0,0,10"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{Binding DataContext.ColCompanyName, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Name}" 
+                                    Width="200"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColCompanyWebsite, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Website}" 
+                                    Width="200"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColCompanyContact, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding ContactInfo}" 
+                                    Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Delete Button -->
+        <Button Content="{Binding ButtonDeleteCompany}"
+                Command="{Binding DeleteCompanyCommand}"
+                Style="{StaticResource DangerButtonStyle}"
+                Width="200"
+                HorizontalAlignment="Left"/>
+    </StackPanel>
+</UserControl>

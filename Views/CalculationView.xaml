@@ -1,0 +1,320 @@
+﻿<UserControl x:Class="ProductPriceCalculator.Views.CalculationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800">
+    <StackPanel>
+        <!-- Header -->
+        <TextBlock FontSize="20" FontWeight="Bold" Margin="0,0,0,10">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} {1}">
+                    <Binding Path="IsComponent" Converter="{StaticResource BoolToTextConverter}"/>
+                    <Binding Path="LabelCalculation" Mode="OneWay"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <Rectangle Height="2" Fill="#0078D7" Margin="0,0,0,15"/>
+
+        <!-- Component Info Banner (visible only for components) -->
+        <Border Background="#FFF8DC" 
+                BorderBrush="#C89600" 
+                BorderThickness="2" 
+                CornerRadius="5" 
+                Padding="10" 
+                Margin="0,0,0,15"
+                Visibility="{Binding IsComponent, Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Text="{Binding InfoCreatingComponentBanner}" 
+                       TextWrapping="Wrap" 
+                       FontWeight="Bold"/>
+        </Border>
+
+        <!-- Product/Component Name -->
+        <Label Content="{Binding LabelProductName}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Product Category -->
+        <Label Content="{Binding LabelProductCategory}" FontWeight="SemiBold"/>
+        <ComboBox ItemsSource="{Binding AvailableCategories}"
+                  SelectedItem="{Binding ProductCategory}"
+                  IsEditable="True"
+                  Height="25" 
+                  Margin="0,0,0,15"/>
+
+        <!-- Company -->
+        <Label Content="{Binding LabelCompany}" FontWeight="SemiBold"/>
+        <ComboBox ItemsSource="{Binding AvailableCompanies}"
+                  SelectedItem="{Binding Company}"
+                  IsEditable="True"
+                  Height="25" 
+                  Margin="0,0,0,15"/>
+
+        <!-- Purchase Link -->
+        <Label Content="{Binding LabelPurchaseLink}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding PurchaseLink, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Base Cost -->
+        <Label Content="{Binding LabelBaseCost}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding BaseCost, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Markup Percent -->
+        <Label Content="{Binding LabelMarkup}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding MarkupPercent, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Tax Rate -->
+        <Label Content="{Binding LabelTaxRate}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding TaxRate, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Units Per Package -->
+        <Label Content="{Binding LabelUnitsPerPackage}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding UnitsPerPackage, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,5"/>
+        <Border Background="#F0F8FF" 
+                BorderBrush="#CCC" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Padding="8" 
+                Margin="0,0,0,15">
+            <TextBlock Text="{Binding InfoBulkPricing}" 
+                       TextWrapping="Wrap" 
+                       FontSize="11" 
+                       Foreground="DarkBlue"/>
+        </Border>
+
+        <!-- Quantity -->
+        <Label Content="{Binding LabelQuantity}" FontWeight="SemiBold"/>
+        <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" 
+                 Height="25" 
+                 Margin="0,0,0,15"/>
+
+        <!-- Expected Monthly Units (for products only) -->
+        <StackPanel Visibility="{Binding IsComponent, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <Label Content="{Binding LabelExpectedUnits}" FontWeight="SemiBold"/>
+            <TextBox Text="{Binding ExpectedMonthlyUnits, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="25" 
+                     Margin="0,0,0,5"/>
+
+            <!-- Operating Costs Info -->
+            <Border Background="#FFFAE6" 
+                    BorderBrush="#FFC864" 
+                    BorderThickness="1" 
+                    CornerRadius="5" 
+                    Padding="10" 
+                    Margin="0,0,0,15">
+                <StackPanel>
+                    <TextBlock FontSize="12" TextWrapping="Wrap">
+                        <Run Text="{Binding LabelTotalMonthlyOperatingCosts, Mode=OneWay}" FontWeight="Bold"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding TotalOperatingCosts, StringFormat=C2, Mode=OneWay}" FontWeight="Bold"/>
+                    </TextBlock>
+                    <TextBlock FontSize="12" TextWrapping="Wrap">
+                        <Run Text="{Binding LabelExpectedMonthlyUnits, Mode=OneWay}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding ExpectedMonthlyUnits}"/>
+                    </TextBlock>
+                    <TextBlock FontSize="12" TextWrapping="Wrap">
+                        <Run Text="{Binding LabelCostPerUnit, Mode=OneWay}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding CalculationResult.OperatingCostPerUnit, StringFormat=C2}" FontWeight="Bold"/>
+                    </TextBlock>
+                    <TextBlock Text="{Binding InfoOperatingCostsAddedBeforeMarkup}" 
+                               FontSize="11" 
+                               FontStyle="Italic" 
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <Button Content="{Binding ButtonManageOperatingCostsIcon}" 
+                    Command="{Binding DataContext.NavigateToOperatingCostsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    Style="{StaticResource SecondaryButtonStyle}"
+                    Width="250" 
+                    Margin="0,0,0,15"
+                    HorizontalAlignment="Left"/>
+        </StackPanel>
+
+        <!-- Subproducts/Components Section (for products only) -->
+        <StackPanel Visibility="{Binding IsComponent, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <TextBlock Text="{Binding HeaderComponentsUsed}" 
+                       FontSize="16" 
+                       FontWeight="Bold" 
+                       Margin="0,10,0,10"/>
+
+            <DataGrid ItemsSource="{Binding Subproducts}"
+                      AutoGenerateColumns="False"
+                      Height="150"
+                      Margin="0,0,0,10"
+                      IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding DataContext.ColName, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Name}" Width="200"/>
+                    <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Cost, StringFormat=C2}" Width="80"/>
+                    <DataGridTextColumn Header="{Binding DataContext.ColCategoryDescription, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Description}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Content="{Binding ButtonAddComponent}" 
+                        Command="{Binding AddComponentCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Width="200" Margin="0,0,10,0"/>
+                <Button Content="{Binding ButtonDeleteSelected}" 
+                        Command="{Binding DeleteSubproductCommand}"
+                        Style="{StaticResource DangerButtonStyle}"
+                        Width="150"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Calculation Result Display -->
+        <Border Background="#F5F5F5" 
+                BorderBrush="#0078D7" 
+                BorderThickness="2" 
+                CornerRadius="5" 
+                Padding="15" 
+                Margin="0,10,0,15"
+                Visibility="{Binding CalculationResult, Converter={StaticResource NullToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="{Binding HeaderPriceCalculationResult, Mode=OneWay}" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,10"/>
+                
+                <TextBlock>
+                    <Run Text="{Binding LabelFinalPricePerUnit, Mode=OneWay}" FontWeight="Bold"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}" 
+                         FontSize="18" 
+                         FontWeight="Bold" 
+                         Foreground="Green"/>
+                </TextBlock>
+                
+                <TextBlock Margin="0,5,0,0">
+                    <Run Text="{Binding LabelTotalPrice, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.TotalPrice, StringFormat=C2, Mode=OneWay}" 
+                         FontWeight="Bold"/>
+                </TextBlock>
+                
+                <TextBlock Margin="0,5,0,0">
+                    <Run Text="{Binding LabelProfitPerUnit, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.ProfitPerUnit, StringFormat=C2, Mode=OneWay}" 
+                         Foreground="DarkGreen"/>
+                </TextBlock>
+                
+                <TextBlock Margin="0,5,0,0">
+                    <Run Text="{Binding LabelGrossMargin, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.GrossMarginPercent, StringFormat=F2, Mode=OneWay}"/>
+                    <Run Text="%"/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <!-- Action Buttons -->
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Button Content="{Binding ButtonSave}" 
+                    Command="{Binding SaveProductCommand}"
+                    Style="{StaticResource SuccessButtonStyle}"
+                    Width="150" Margin="0,0,10,0"/>
+            <Button Content="{Binding ButtonShowDetails}" 
+                    Command="{Binding CalculatePriceCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="150"/>
+        </StackPanel>
+
+        <!-- Detailed Calculation Breakdown (shown when ShowDetails is clicked) -->
+        <Border Background="#F0F8FF" 
+                BorderBrush="#0078D7" 
+                BorderThickness="2" 
+                CornerRadius="5" 
+                Padding="15" 
+                Margin="0,15,0,0"
+                Visibility="{Binding ShowCalculationDetails, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel>
+                <TextBlock Text="{Binding HeaderDetailedCalculationBreakdown, Mode=OneWay}" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,15"/>
+                
+                <!-- Cost Breakdown -->
+                <TextBlock Text="{Binding ResultCostBreakdown, Mode=OneWay}" 
+                           FontSize="14" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,5"/>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="{Binding ResultBaseCost, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.BaseCost, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="{Binding LabelSubproductsTotal, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.SubproductsCost, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="+ "/>
+                    <Run Text="{Binding ResultOperatingCostPerUnit, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.OperatingCostPerUnit, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,10" FontWeight="Bold">
+                    <Run Text="{Binding LabelTotalDirectCost, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.TotalDirectCost, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+
+                <!-- Pricing -->
+                <TextBlock Text="{Binding ResultPricing, Mode=OneWay}" 
+                           FontSize="14" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5"/>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="{Binding ResultAfterMarkup, Mode=OneWay}"/>
+                    <Run Text=" (+"/>
+                    <Run Text="{Binding MarkupPercent, Mode=OneWay}"/>
+                    <Run Text="%): "/>
+                    <Run Text="{Binding CalculationResult.PriceAfterMarkup, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,10">
+                    <Run Text="{Binding ResultAfterTax, Mode=OneWay}"/>
+                    <Run Text=" (+"/>
+                    <Run Text="{Binding TaxRate, Mode=OneWay}"/>
+                    <Run Text="%): "/>
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+
+                <!-- Summary -->
+                <TextBlock Text="{Binding ResultSummary, Mode=OneWay}" 
+                           FontSize="14" 
+                           FontWeight="Bold" 
+                           Margin="0,10,0,5"/>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="{Binding ResultFinalUnitPrice, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}" FontWeight="Bold"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,3">
+                    <Run Text="{Binding ResultQuantity, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding Quantity, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontSize="12" Margin="0,0,0,0" FontWeight="Bold">
+                    <Run Text="{Binding ResultTotalPrice, Mode=OneWay}"/>
+                    <Run Text=" "/>
+                    <Run Text="{Binding CalculationResult.TotalPrice, StringFormat=C2, Mode=OneWay}"/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>
