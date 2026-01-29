@@ -40,7 +40,8 @@
 
                 <Label Content="{Binding LabelCategoryName}" FontWeight="SemiBold"/>
                 <TextBox Text="{Binding NewCategoryName, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
+                         Height="30"
+                         VerticalContentAlignment="Center"
                          Margin="0,0,0,10"/>
 
                 <Label Content="{Binding LabelCategoryDescription}" FontWeight="SemiBold"/>
@@ -49,6 +50,7 @@
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
+                         Padding="5"
                          Margin="0,0,0,10"/>
 
                 <Button Content="{Binding ButtonAddCategory}"

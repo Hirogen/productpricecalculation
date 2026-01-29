@@ -163,18 +163,23 @@ namespace ProductPriceCalculator.ViewModels
             OnPropertyChanged(nameof(NavCategories));
             OnPropertyChanged(nameof(NavCompanies));
             
-            // Refresh current view to update localized text
-            if (CurrentViewModel is ProductsViewModel)
+            // Refresh current view to update localized text and currency symbols
+            var currentView = CurrentViewModel;
+            if (currentView is ProductsViewModel)
                 NavigateToProducts();
-            else if (CurrentViewModel is CalculationViewModel calc)
-                NavigateToCalculation(calc.CurrentProductId, calc.IsComponent);
-            else if (CurrentViewModel is OperatingCostsViewModel)
+            else if (currentView is CalculationViewModel calc)
+            {
+                var productId = calc.CurrentProductId;
+                var isComponent = calc.IsComponent;
+                NavigateToCalculation(productId, isComponent);
+            }
+            else if (currentView is OperatingCostsViewModel)
                 NavigateToOperatingCosts();
-            else if (CurrentViewModel is PortfolioViewModel)
+            else if (currentView is PortfolioViewModel)
                 NavigateToPortfolio();
-            else if (CurrentViewModel is CategoriesViewModel)
+            else if (currentView is CategoriesViewModel)
                 NavigateToCategories();
-            else if (CurrentViewModel is CompaniesViewModel)
+            else if (currentView is CompaniesViewModel)
                 NavigateToCompanies();
         }
 

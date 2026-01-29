@@ -71,11 +71,18 @@ namespace ProductPriceCalculator.ViewModels
 
         private void DeleteCategory()
         {
-            if (SelectedCategory != null)
+            if (SelectedCategory == null)
+                return;
+
+            var result = Services.LocalizedMessageBox.ShowConfirmation(
+                Localization.Get("MsgDeleteCategoryConfirm"),
+                Localization.Get("MsgConfirmation"));
+
+            if (result == System.Windows.MessageBoxResult.Yes)
             {
                 _databaseManager.DeleteProductCategory(SelectedCategory.Id);
                 Categories.Remove(SelectedCategory);
-                SelectedCategory = null;
+                Services.LocalizedMessageBox.ShowInformation(Localization.Get("MsgCategoryDeleted"));
             }
         }
 

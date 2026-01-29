@@ -178,6 +178,7 @@ namespace ProductPriceCalculator.Services
         public double OperatingCostPerUnit { get; set; }
         public double FinalPrice { get; set; }
         public double TotalDirectCost { get; set; }
+        public double ProfitPerUnit => FinalPrice - TotalDirectCost;
     }
 
     #endregion

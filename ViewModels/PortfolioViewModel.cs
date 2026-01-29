@@ -64,6 +64,7 @@ namespace ProductPriceCalculator.ViewModels
         public string ColOperatingCostPerUnit => Localization.Get("ColOperatingCostPerUnit");
         public string ColFinalPrice => Localization.Get("ColFinalPrice");
         public string ColProfit => Localization.Get("ColProfit");
+        public string LabelPerMonth => Localization.Get("LabelPerMonth");
 
         #endregion
 

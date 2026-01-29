@@ -40,13 +40,15 @@
 
                 <Label Content="{Binding LabelCostName}" FontWeight="SemiBold"/>
                 <TextBox Text="{Binding NewCostName, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
+                         Height="30"
+                         VerticalContentAlignment="Center"
                          Margin="0,0,0,10"
                          Width="400"/>
 
                 <Label Content="{Binding LabelAmount}" FontWeight="SemiBold"/>
                 <TextBox Text="{Binding NewCostAmount, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
+                         Height="30"
+                         VerticalContentAlignment="Center"
                          Margin="0,0,0,10"
                          Width="400"/>
 
@@ -76,7 +78,7 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{Binding DataContext.ColName, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="{Binding DataContext.ColAmount, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Amount, StringFormat=C2}" Width="100"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColAmount, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Amount, Converter={StaticResource CurrencyConverter}}" Width="100"/>
                 <DataGridTextColumn Header="{Binding DataContext.ColType, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding FrequencyText}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -91,7 +93,7 @@
             <TextBlock FontSize="14" FontWeight="Bold">
                 <Run Text="{Binding LabelTotalMonthlyCosts, Mode=OneWay}"/>
                 <Run Text=" "/>
-                <Run Text="{Binding TotalMonthlyCosts, Mode=OneWay, StringFormat=C2}"
+                <Run Text="{Binding TotalMonthlyCosts, Mode=OneWay, Converter={StaticResource CurrencyConverter}}"
                      Foreground="DarkGreen"
                      FontSize="16"/>
             </TextBlock>

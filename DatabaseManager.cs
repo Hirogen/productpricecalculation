@@ -711,7 +711,9 @@ namespace ProductPriceCalculator
         
         public string FrequencyText 
         { 
-            get => IsMonthly ? "(monthly / monatlich)" : "(one-time / einmalig)"; 
+            get => IsMonthly 
+                ? Localization.Get("FrequencyMonthly") 
+                : Localization.Get("FrequencyOneTime"); 
         }
     }
 

@@ -29,7 +29,7 @@ namespace ProductPriceCalculator
             // Window settings
             Title = Localization.Get("TitleAddComponent");
             Width = 500;
-            Height = 250;
+            Height = 280;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             ResizeMode = ResizeMode.NoResize;
 

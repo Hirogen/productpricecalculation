@@ -40,12 +40,14 @@
 
                 <Label Content="{Binding LabelCompanyName}" FontWeight="SemiBold"/>
                 <TextBox Text="{Binding NewCompanyName, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
+                         Height="30"
+                         VerticalContentAlignment="Center"
                          Margin="0,0,0,10"/>
 
                 <Label Content="{Binding LabelCompanyWebsite}" FontWeight="SemiBold"/>
                 <TextBox Text="{Binding NewCompanyWebsite, UpdateSourceTrigger=PropertyChanged}"
-                         Height="25"
+                         Height="30"
+                         VerticalContentAlignment="Center"
                          Margin="0,0,0,10"/>
 
                 <Label Content="{Binding LabelCompanyContact}" FontWeight="SemiBold"/>
@@ -54,6 +56,7 @@
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          VerticalScrollBarVisibility="Auto"
+                         Padding="5"
                          Margin="0,0,0,10"/>
             </StackPanel>
         </Border>

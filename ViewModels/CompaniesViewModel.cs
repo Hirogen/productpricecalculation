@@ -81,11 +81,18 @@ namespace ProductPriceCalculator.ViewModels
 
         private void DeleteCompany()
         {
-            if (SelectedCompany != null)
+            if (SelectedCompany == null)
+                return;
+
+            var result = Services.LocalizedMessageBox.ShowConfirmation(
+                Localization.Get("MsgDeleteCompanyConfirm"),
+                Localization.Get("MsgConfirmation"));
+
+            if (result == System.Windows.MessageBoxResult.Yes)
             {
                 _databaseManager.DeleteCompany(SelectedCompany.Id);
                 Companies.Remove(SelectedCompany);
-                SelectedCompany = null;
+                Services.LocalizedMessageBox.ShowInformation(Localization.Get("MsgCompanyDeleted"));
             }
         }
 

@@ -117,7 +117,7 @@
                     <TextBlock FontSize="12" TextWrapping="Wrap">
                         <Run Text="{Binding LabelTotalMonthlyOperatingCosts, Mode=OneWay}" FontWeight="Bold"/>
                         <Run Text=" "/>
-                        <Run Text="{Binding TotalOperatingCosts, StringFormat=C2, Mode=OneWay}" FontWeight="Bold"/>
+                        <Run Text="{Binding TotalOperatingCosts, Converter={StaticResource CurrencyConverter}, Mode=OneWay}" FontWeight="Bold"/>
                     </TextBlock>
                     <TextBlock FontSize="12" TextWrapping="Wrap">
                         <Run Text="{Binding LabelExpectedMonthlyUnits, Mode=OneWay}"/>
@@ -127,7 +127,7 @@
                     <TextBlock FontSize="12" TextWrapping="Wrap">
                         <Run Text="{Binding LabelCostPerUnit, Mode=OneWay}"/>
                         <Run Text=" "/>
-                        <Run Text="{Binding CalculationResult.OperatingCostPerUnit, StringFormat=C2}" FontWeight="Bold"/>
+                        <Run Text="{Binding CalculationResult.OperatingCostPerUnit, Converter={StaticResource CurrencyConverter}}" FontWeight="Bold"/>
                     </TextBlock>
                     <TextBlock Text="{Binding InfoOperatingCostsAddedBeforeMarkup}" 
                                FontSize="11" 
@@ -158,7 +158,7 @@
                       IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding DataContext.ColName, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Name}" Width="200"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Cost, StringFormat=C2}" Width="80"/>
+                    <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Cost, Converter={StaticResource CurrencyConverter}}" Width="80"/>
                     <DataGridTextColumn Header="{Binding DataContext.ColCategoryDescription, RelativeSource={RelativeSource AncestorType=UserControl}}" Binding="{Binding Description}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
@@ -192,7 +192,7 @@
                 <TextBlock>
                     <Run Text="{Binding LabelFinalPricePerUnit, Mode=OneWay}" FontWeight="Bold"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}" 
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, Converter={StaticResource CurrencyConverter}, Mode=OneWay}" 
                          FontSize="18" 
                          FontWeight="Bold" 
                          Foreground="Green"/>
@@ -201,14 +201,14 @@
                 <TextBlock Margin="0,5,0,0">
                     <Run Text="{Binding LabelTotalPrice, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.TotalPrice, StringFormat=C2, Mode=OneWay}" 
+                    <Run Text="{Binding CalculationResult.TotalPrice, Converter={StaticResource CurrencyConverter}, Mode=OneWay}" 
                          FontWeight="Bold"/>
                 </TextBlock>
                 
                 <TextBlock Margin="0,5,0,0">
                     <Run Text="{Binding LabelProfitPerUnit, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.ProfitPerUnit, StringFormat=C2, Mode=OneWay}" 
+                    <Run Text="{Binding CalculationResult.ProfitPerUnit, Converter={StaticResource CurrencyConverter}, Mode=OneWay}" 
                          Foreground="DarkGreen"/>
                 </TextBlock>
                 
@@ -255,23 +255,23 @@
                 <TextBlock FontSize="12" Margin="0,0,0,3">
                     <Run Text="{Binding ResultBaseCost, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.BaseCost, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.BaseCost, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock FontSize="12" Margin="0,0,0,3">
                     <Run Text="{Binding LabelSubproductsTotal, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.SubproductsCost, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.SubproductsCost, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock FontSize="12" Margin="0,0,0,3">
                     <Run Text="+ "/>
                     <Run Text="{Binding ResultOperatingCostPerUnit, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.OperatingCostPerUnit, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.OperatingCostPerUnit, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock FontSize="12" Margin="0,0,0,10" FontWeight="Bold">
                     <Run Text="{Binding LabelTotalDirectCost, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.TotalDirectCost, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.TotalDirectCost, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Pricing -->
@@ -284,14 +284,14 @@
                     <Run Text=" (+"/>
                     <Run Text="{Binding MarkupPercent, Mode=OneWay}"/>
                     <Run Text="%): "/>
-                    <Run Text="{Binding CalculationResult.PriceAfterMarkup, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.PriceAfterMarkup, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock FontSize="12" Margin="0,0,0,10">
                     <Run Text="{Binding ResultAfterTax, Mode=OneWay}"/>
                     <Run Text=" (+"/>
                     <Run Text="{Binding TaxRate, Mode=OneWay}"/>
                     <Run Text="%): "/>
-                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
 
                 <!-- Summary -->
@@ -302,7 +302,7 @@
                 <TextBlock FontSize="12" Margin="0,0,0,3">
                     <Run Text="{Binding ResultFinalUnitPrice, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, StringFormat=C2, Mode=OneWay}" FontWeight="Bold"/>
+                    <Run Text="{Binding CalculationResult.FinalPricePerUnit, Converter={StaticResource CurrencyConverter}, Mode=OneWay}" FontWeight="Bold"/>
                 </TextBlock>
                 <TextBlock FontSize="12" Margin="0,0,0,3">
                     <Run Text="{Binding ResultQuantity, Mode=OneWay}"/>
@@ -312,7 +312,7 @@
                 <TextBlock FontSize="12" Margin="0,0,0,0" FontWeight="Bold">
                     <Run Text="{Binding ResultTotalPrice, Mode=OneWay}"/>
                     <Run Text=" "/>
-                    <Run Text="{Binding CalculationResult.TotalPrice, StringFormat=C2, Mode=OneWay}"/>
+                    <Run Text="{Binding CalculationResult.TotalPrice, Converter={StaticResource CurrencyConverter}, Mode=OneWay}"/>
                 </TextBlock>
             </StackPanel>
         </Border>

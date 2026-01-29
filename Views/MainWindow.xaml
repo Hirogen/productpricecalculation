@@ -69,10 +69,6 @@
                             Command="{Binding NavigateToProductsCommand}"
                             Style="{StaticResource NavButtonStyle}"/>
                     
-                    <Button Content="{Binding NavCalculation}" 
-                            Command="{Binding NavigateToCalculationCommand}"
-                            Style="{StaticResource NavButtonStyle}"/>
-                    
                     <Button Content="{Binding NavProductPortfolio}" 
                             Command="{Binding NavigateToPortfolioCommand}"
                             Style="{StaticResource NavButtonStyle}"/>

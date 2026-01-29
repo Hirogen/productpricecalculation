@@ -76,4 +76,54 @@ namespace ProductPriceCalculator.Converters
             throw new NotImplementedException();
         }
     }
+
+    public class GreaterThanZeroToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double doubleValue)
+            {
+                return doubleValue > 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+            if (value is int intValue)
+            {
+                return intValue > 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class CurrencyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double doubleValue)
+            {
+                return Localization.FormatCurrency(doubleValue);
+            }
+            if (value is decimal decimalValue)
+            {
+                return Localization.FormatCurrency((double)decimalValue);
+            }
+            if (value is int intValue)
+            {
+                return Localization.FormatCurrency(intValue);
+            }
+            if (value is float floatValue)
+            {
+                return Localization.FormatCurrency(floatValue);
+            }
+            return Localization.FormatCurrency(0);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

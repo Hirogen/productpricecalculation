@@ -11,6 +11,7 @@
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <converters:BoolToTextConverter x:Key="BoolToTextConverter"/>
+            <converters:CurrencyConverter x:Key="CurrencyConverter"/>
 
             <!-- Base Button Style -->
             <Style x:Key="BaseButtonStyle" TargetType="Button">

@@ -50,7 +50,7 @@
                                     Width="*" 
                                     IsReadOnly="True"/>
                 <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                    Binding="{Binding Product.BaseCost, StringFormat=C2}" 
+                                    Binding="{Binding Product.BaseCost, Converter={StaticResource CurrencyConverter}}" 
                                     Width="100" 
                                     IsReadOnly="True"/>
                 <DataGridTextColumn Header="{Binding DataContext.ColMarkup, RelativeSource={RelativeSource AncestorType=UserControl}}" 
@@ -94,8 +94,8 @@
                     <TextBlock FontSize="13" FontWeight="SemiBold">
                         <Run Text="{Binding LabelDistributedOperatingCost, Mode=OneWay}"/>
                         <Run Text=" "/>
-                        <Run Text="{Binding PortfolioResult.TotalOperatingCosts, StringFormat=C2}"/>
-                        <Run Text="/month"/>
+                        <Run Text="{Binding PortfolioResult.TotalOperatingCosts, Converter={StaticResource CurrencyConverter}}"/>
+                        <Run Text="{Binding LabelPerMonth, Mode=OneWay}"/>
                     </TextBlock>
                 </StackPanel>
             </Border>
@@ -117,13 +117,13 @@
                                         Binding="{Binding Percentage, StringFormat=F1}" 
                                         Width="90"/>
                     <DataGridTextColumn Header="{Binding DataContext.ColOperatingCostPerUnit, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                        Binding="{Binding OperatingCostPerUnit, StringFormat=C2}" 
+                                        Binding="{Binding OperatingCostPerUnit, Converter={StaticResource CurrencyConverter}}" 
                                         Width="120"/>
                     <DataGridTextColumn Header="{Binding DataContext.ColFinalPrice, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                        Binding="{Binding FinalPrice, StringFormat=C2}" 
+                                        Binding="{Binding FinalPrice, Converter={StaticResource CurrencyConverter}}" 
                                         Width="100"/>
                     <DataGridTextColumn Header="{Binding DataContext.ColProfit, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                                        Binding="{Binding ProfitPerUnit, StringFormat=C2}" 
+                                        Binding="{Binding ProfitPerUnit, Converter={StaticResource CurrencyConverter}}" 
                                         Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>

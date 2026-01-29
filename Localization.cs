@@ -16,6 +16,16 @@ namespace ProductPriceCalculator
             set
             {
                 currentLanguage = value;
+                
+                // Update thread culture for proper number/currency formatting
+                var culture = value == "de" ? new CultureInfo("de-DE") : new CultureInfo("en-US");
+                System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+                
+                // Set the default culture for the app domain
+                CultureInfo.DefaultThreadCurrentCulture = culture;
+                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                
                 OnLanguageChanged?.Invoke();
             }
         }
@@ -130,6 +140,8 @@ namespace ProductPriceCalculator
             ["HeaderCurrentCosts"] = new() { ["en"] = "Current Operating Costs", ["de"] = "Aktuelle Betriebskosten" },
             ["ColAmount"] = new() { ["en"] = "Amount", ["de"] = "Betrag" },
             ["ColType"] = new() { ["en"] = "Type", ["de"] = "Typ" },
+            ["FrequencyMonthly"] = new() { ["en"] = "(monthly)", ["de"] = "(monatlich)" },
+            ["FrequencyOneTime"] = new() { ["en"] = "(one-time)", ["de"] = "(einmalig)" },
             ["InfoOperatingCostsBanner"] = new() { ["en"] = "💡 Operating costs are distributed across all products based on expected sales volume. Define your monthly recurring costs here (rent, utilities, labor, etc.).", ["de"] = "💡 Betriebskosten werden basierend auf dem erwarteten Verkaufsvolumen auf alle Produkte verteilt. Definieren Sie hier Ihre monatlich wiederkehrenden Kosten (Miete, Nebenkosten, Arbeit usw.)." },
             ["HeaderAddNewOperatingCost"] = new() { ["en"] = "➕ Add New Operating Cost", ["de"] = "➕ Neue Betriebskosten hinzufügen" },
             ["HeaderAddNewCost"] = new() { ["en"] = "➕ Add New Operating Cost", ["de"] = "➕ Neue Betriebskosten hinzufügen" },
@@ -217,6 +229,9 @@ namespace ProductPriceCalculator
             ["MsgCalcError"] = new() { ["en"] = "Calculation error:", ["de"] = "Berechnungsfehler:" },
             ["MsgCalcErrorTitle"] = new() { ["en"] = "Error", ["de"] = "Fehler" },
             ["MsgDeleteConfirm"] = new() { ["en"] = "Are you sure you want to delete this item?", ["de"] = "Sind Sie sicher, dass Sie dieses Element löschen möchten?" },
+            ["MsgDeleteCompanyConfirm"] = new() { ["en"] = "Are you sure you want to delete this company?", ["de"] = "Sind Sie sicher, dass Sie diese Firma löschen möchten?" },
+            ["MsgDeleteCategoryConfirm"] = new() { ["en"] = "Are you sure you want to delete this category?", ["de"] = "Sind Sie sicher, dass Sie diese Kategorie löschen möchten?" },
+            ["ButtonDelete"] = new() { ["en"] = "Delete", ["de"] = "Löschen" },
             ["MsgConfirmation"] = new() { ["en"] = "Confirmation", ["de"] = "Bestätigung" },
             ["MsgSelectProduct"] = new() { ["en"] = "Please select a component and enter a valid quantity.", ["de"] = "Bitte wählen Sie eine Komponenten aus und geben Sie eine gültige Menge ein." },
             ["MsgExportReport"] = new() { ["en"] = "Report exported successfully!", ["de"] = "Bericht erfolgreich exportiert!" },
@@ -233,6 +248,18 @@ namespace ProductPriceCalculator
             ["LabelSubproductsTotal"] = new() { ["en"] = "+ Subproducts Total:", ["de"] = "+ Unterprodukte gesamt:" },
             ["LabelTotalDirectCost"] = new() { ["en"] = "= Total Direct Cost:", ["de"] = "= Gesamte direkte Kosten:" },
             ["LabelFinalPricePerUnit"] = new() { ["en"] = "Final Price per Unit:", ["de"] = "Endpreis pro Einheit:" },
+            ["HeaderComponentsUsed"] = new() { ["en"] = "Components Used", ["de"] = "Verwendete Komponenten" },
+            ["ButtonAddComponent"] = new() { ["en"] = "➕ Add Component", ["de"] = "➕ Komponente hinzufügen" },
+            ["ButtonDeleteSelected"] = new() { ["en"] = "🗑️ Delete Selected", ["de"] = "🗑️ Ausgewählte löschen" },
+            ["ButtonSave"] = new() { ["en"] = "💾 Save", ["de"] = "💾 Speichern" },
+            ["LabelTotalMonthlyOperatingCosts"] = new() { ["en"] = "Total Monthly Operating Costs:", ["de"] = "Gesamte monatliche Betriebskosten:" },
+            ["LabelExpectedMonthlyUnits"] = new() { ["en"] = "Expected Monthly Units:", ["de"] = "Erwartete monatliche Einheiten:" },
+            ["LabelCostPerUnit"] = new() { ["en"] = "Cost Per Unit:", ["de"] = "Kosten pro Einheit:" },
+            ["InfoOperatingCostsAddedBeforeMarkup"] = new() { ["en"] = "Operating costs are added to the base cost before markup.", ["de"] = "Betriebskosten werden vor dem Aufschlag zu den Basiskosten addiert." },
+            ["LabelProfitPerUnit"] = new() { ["en"] = "Profit per Unit:", ["de"] = "Gewinn pro Einheit:" },
+            ["LabelGrossMargin"] = new() { ["en"] = "Gross Margin:", ["de"] = "Bruttomarge:" },
+            ["LabelTotalPrice"] = new() { ["en"] = "Total Price:", ["de"] = "Gesamtpreis:" },
+            ["LabelPerMonth"] = new() { ["en"] = "/month", ["de"] = "/Monat" },
         };
 
         /// <summary>
