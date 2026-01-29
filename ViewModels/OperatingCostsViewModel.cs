@@ -14,16 +14,18 @@ namespace ProductPriceCalculator.ViewModels
     {
         private readonly DatabaseManager _databaseManager;
         private readonly IDialogService _dialogService;
+        private readonly IStatusNotificationService _statusNotificationService;
 
         private OperatingCost _selectedCost;
         private string _newCostName;
         private double _newCostAmount;
         private bool _newCostIsMonthly = true;
 
-        public OperatingCostsViewModel(DatabaseManager databaseManager, IDialogService dialogService)
+        public OperatingCostsViewModel(DatabaseManager databaseManager, IDialogService dialogService, IStatusNotificationService statusNotificationService)
         {
             _databaseManager = databaseManager ?? throw new ArgumentNullException(nameof(databaseManager));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _statusNotificationService = statusNotificationService ?? throw new ArgumentNullException(nameof(statusNotificationService));
 
             OperatingCosts = new ObservableCollection<OperatingCost>();
 
@@ -137,7 +139,9 @@ namespace ProductPriceCalculator.ViewModels
                 NewCostIsMonthly = true;
 
                 OnPropertyChanged(nameof(TotalMonthlyCosts));
-                _dialogService.ShowMessage("Operating cost added successfully!");
+                
+                // Show success notification in status bar
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgOperatingCostAdded"));
             }
             catch (Exception ex)
             {
@@ -156,7 +160,9 @@ namespace ProductPriceCalculator.ViewModels
                     _databaseManager.DeleteOperatingCost(SelectedCost.Id);
                     OperatingCosts.Remove(SelectedCost);
                     OnPropertyChanged(nameof(TotalMonthlyCosts));
-                    _dialogService.ShowMessage("Operating cost deleted successfully!");
+                    
+                    // Show success notification in status bar
+                    _statusNotificationService.ShowSuccess(Localization.Get("MsgOperatingCostDeleted"));
                 }
                 catch (Exception ex)
                 {

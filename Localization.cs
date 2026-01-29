@@ -148,6 +148,10 @@ namespace ProductPriceCalculator
             ["LabelTotalMonthlyCosts"] = new() { ["en"] = "Total Monthly Costs:", ["de"] = "Gesamte monatliche Kosten:" },
             ["ButtonAddCost"] = new() { ["en"] = "➕ Add Cost", ["de"] = "➕ Kosten hinzufügen" },
             
+            // Status notification messages (NEW)
+            ["MsgOperatingCostAdded"] = new() { ["en"] = "Operating cost added successfully!", ["de"] = "Betriebskosten erfolgreich hinzugefügt!" },
+            ["MsgOperatingCostDeleted"] = new() { ["en"] = "Operating cost deleted successfully!", ["de"] = "Betriebskosten erfolgreich gelöscht!" },
+            
             // Info messages
             ["InfoBulkPricing"] = new() { ["en"] = "For bulk items: if you buy a package of 100 units, enter 100. The cost per unit will be calculated automatically.", ["de"] = "Für Großbestellungen: Wenn Sie ein Paket mit 100 Einheiten kaufen, geben Sie 100 ein. Die Kosten pro Einheit werden automatisch berechnet." },
             ["InfoOperatingCosts"] = new() { ["en"] = "Total Monthly Operating Costs:", ["de"] = "Gesamte monatliche Betriebskosten:" },
@@ -260,6 +264,23 @@ namespace ProductPriceCalculator
             ["LabelGrossMargin"] = new() { ["en"] = "Gross Margin:", ["de"] = "Bruttomarge:" },
             ["LabelTotalPrice"] = new() { ["en"] = "Total Price:", ["de"] = "Gesamtpreis:" },
             ["LabelPerMonth"] = new() { ["en"] = "/month", ["de"] = "/Monat" },
+            
+            // NEW: Product table headers (Issue #5, #6, #9)
+            ["ColProductCategory"] = new() { ["en"] = "Category", ["de"] = "Kategorie" },
+            ["ColCompany"] = new() { ["en"] = "Company", ["de"] = "Firma" },
+            ["ColComponentName"] = new() { ["en"] = "Component", ["de"] = "Komponente" },
+            ["ColUnitsPerPackage"] = new() { ["en"] = "Units/Package", ["de"] = "Einheiten/Paket" },
+            ["ColCost"] = new() { ["en"] = "Cost", ["de"] = "Kosten" },
+            ["ColDescription"] = new() { ["en"] = "Calculation Details", ["de"] = "Berechnungsdetails" },
+            
+            // NEW: Component description text (Issue #8)
+            ["DescBase"] = new() { ["en"] = "Base", ["de"] = "Basis" },
+            ["DescMarkup"] = new() { ["en"] = "Markup", ["de"] = "Aufschlag" },
+            ["DescTax"] = new() { ["en"] = "Tax", ["de"] = "Steuer" },
+            ["DescFinal"] = new() { ["en"] = "Final", ["de"] = "Endpreis" },
+            ["DescPackage"] = new() { ["en"] = "package", ["de"] = "Paket" },
+            ["DescUnits"] = new() { ["en"] = "units", ["de"] = "Einheiten" },
+            ["DescPerUnit"] = new() { ["en"] = "/unit", ["de"] = "/Einheit" },
         };
 
         /// <summary>

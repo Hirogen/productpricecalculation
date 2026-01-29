@@ -14,6 +14,7 @@ namespace ProductPriceCalculator.ViewModels
     {
         private readonly DatabaseManager _databaseManager;
         private readonly IDialogService _dialogService;
+        private readonly IStatusNotificationService _statusNotificationService;
         private readonly Action<long, bool> _navigateToCalculation;
 
         private ObservableCollection<Product> _products;
@@ -24,10 +25,12 @@ namespace ProductPriceCalculator.ViewModels
         public ProductsViewModel(
             DatabaseManager databaseManager, 
             IDialogService dialogService,
+            IStatusNotificationService statusNotificationService,
             Action<long, bool> navigateToCalculation)
         {
             _databaseManager = databaseManager ?? throw new ArgumentNullException(nameof(databaseManager));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _statusNotificationService = statusNotificationService ?? throw new ArgumentNullException(nameof(statusNotificationService));
             _navigateToCalculation = navigateToCalculation ?? throw new ArgumentNullException(nameof(navigateToCalculation));
 
             Products = new ObservableCollection<Product>();
@@ -75,6 +78,15 @@ namespace ProductPriceCalculator.ViewModels
         public string ButtonDeleteComponent => Localization.Get("ButtonDeleteComponent");
         public string ButtonConvertToProduct => Localization.Get("ButtonConvertToProduct");
         public string ColProductName => Localization.Get("ColProductName");
+        
+        // Table column headers (Issue #5 & #6)
+        public string ColProductCategory => Localization.Get("ColProductCategory");
+        public string ColCompany => Localization.Get("ColCompany");
+        public string ColComponentName => Localization.Get("ColComponentName");
+        public string ColUnitsPerPackage => Localization.Get("ColUnitsPerPackage");
+        public string ColBaseCost => Localization.Get("ColBaseCost");
+        public string ColMarkup => Localization.Get("ColMarkup");
+        public string ColExpectedUnits => Localization.Get("ColExpectedUnits");
 
         #endregion
 
@@ -140,7 +152,7 @@ namespace ProductPriceCalculator.ViewModels
             {
                 _databaseManager.DeleteProduct(SelectedProduct.Id);
                 LoadProducts();
-                _dialogService.ShowMessage(Localization.Get("MsgProductDeleted"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgProductDeleted"));
             }
         }
 
@@ -155,7 +167,7 @@ namespace ProductPriceCalculator.ViewModels
                 SelectedProduct.TaxRate = 0;
                 _databaseManager.SaveProduct(SelectedProduct);
                 LoadProducts();
-                _dialogService.ShowMessage(Localization.Get("MsgConvertedToComponent"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgConvertedToComponent"));
             }
         }
 
@@ -175,7 +187,7 @@ namespace ProductPriceCalculator.ViewModels
             {
                 _databaseManager.DeleteProduct(SelectedComponent.Id);
                 LoadProducts();
-                _dialogService.ShowMessage(Localization.Get("MsgProductDeleted"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgProductDeleted"));
             }
         }
 
@@ -190,7 +202,7 @@ namespace ProductPriceCalculator.ViewModels
                 if (SelectedComponent.TaxRate == 0) SelectedComponent.TaxRate = 8.5;
                 _databaseManager.SaveProduct(SelectedComponent);
                 LoadProducts();
-                _dialogService.ShowMessage(Localization.Get("MsgConvertedToProduct"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgConvertedToProduct"));
             }
         }
 

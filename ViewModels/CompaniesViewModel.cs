@@ -2,20 +2,23 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ProductPriceCalculator.Infrastructure;
 using ProductPriceCalculator.Models;
+using ProductPriceCalculator.Services;
 
 namespace ProductPriceCalculator.ViewModels
 {
     public class CompaniesViewModel : ViewModelBase
     {
         private readonly DatabaseManager _databaseManager;
+        private readonly IStatusNotificationService _statusNotificationService;
         private CompanyDb _selectedCompany;
         private string _newCompanyName;
         private string _newCompanyWebsite;
         private string _newCompanyContactInfo;
 
-        public CompaniesViewModel(DatabaseManager databaseManager)
+        public CompaniesViewModel(DatabaseManager databaseManager, IStatusNotificationService statusNotificationService)
         {
             _databaseManager = databaseManager;
+            _statusNotificationService = statusNotificationService;
             Companies = new ObservableCollection<CompanyDb>(_databaseManager.GetCompanies());
             AddCompanyCommand = new RelayCommand(AddCompany, CanAddCompany);
             DeleteCompanyCommand = new RelayCommand(DeleteCompany, () => SelectedCompany != null);
@@ -77,6 +80,8 @@ namespace ProductPriceCalculator.ViewModels
             NewCompanyName = string.Empty;
             NewCompanyWebsite = string.Empty;
             NewCompanyContactInfo = string.Empty;
+            
+            _statusNotificationService.ShowSuccess(Localization.Get("MsgCompanySaved"));
         }
 
         private void DeleteCompany()
@@ -92,7 +97,7 @@ namespace ProductPriceCalculator.ViewModels
             {
                 _databaseManager.DeleteCompany(SelectedCompany.Id);
                 Companies.Remove(SelectedCompany);
-                Services.LocalizedMessageBox.ShowInformation(Localization.Get("MsgCompanyDeleted"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgCompanyDeleted"));
             }
         }
 

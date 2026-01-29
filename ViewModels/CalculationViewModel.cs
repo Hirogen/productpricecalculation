@@ -15,6 +15,7 @@ namespace ProductPriceCalculator.ViewModels
     {
         private readonly DatabaseManager _databaseManager;
         private readonly IDialogService _dialogService;
+        private readonly IStatusNotificationService _statusNotificationService;
         private readonly PriceCalculationService _calculationService;
 
         private long _currentProductId;
@@ -35,10 +36,12 @@ namespace ProductPriceCalculator.ViewModels
         public CalculationViewModel(
             DatabaseManager databaseManager,
             IDialogService dialogService,
+            IStatusNotificationService statusNotificationService,
             PriceCalculationService calculationService)
         {
             _databaseManager = databaseManager ?? throw new ArgumentNullException(nameof(databaseManager));
             _dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            _statusNotificationService = statusNotificationService ?? throw new ArgumentNullException(nameof(statusNotificationService));
             _calculationService = calculationService ?? throw new ArgumentNullException(nameof(calculationService));
 
             Subproducts = new ObservableCollection<Subproduct>();
@@ -219,6 +222,23 @@ namespace ProductPriceCalculator.ViewModels
         public string LabelSubproductsTotal => Localization.Get("LabelSubproductsTotal");
         public string LabelTotalDirectCost => Localization.Get("LabelTotalDirectCost");
         public string ColName => Localization.Get("ColName");
+        
+        // Table column headers (Issue #9)
+        public string ColComponentName => Localization.Get("ColComponentName");
+        public string ColCost => Localization.Get("ColCost");
+        public string ColDescription => Localization.Get("ColDescription");
+        
+        // Detailed breakdown properties (Issue #7)
+        public string ResultCostBreakdown => Localization.Get("ResultCostBreakdown");
+        public string ResultBaseCost => Localization.Get("ResultBaseCost");
+        public string ResultOperatingCostPerUnit => Localization.Get("ResultOperatingCostPerUnit");
+        public string ResultPricing => Localization.Get("ResultPricing");
+        public string ResultAfterMarkup => Localization.Get("ResultAfterMarkup");
+        public string ResultAfterTax => Localization.Get("ResultAfterTax");
+        public string ResultSummary => Localization.Get("ResultSummary");
+        public string ResultFinalUnitPrice => Localization.Get("ResultFinalUnitPrice");
+        public string ResultQuantity => Localization.Get("ResultQuantity");
+        public string ResultTotalPrice => Localization.Get("ResultTotalPrice");
 
         #endregion
 
@@ -396,7 +416,8 @@ namespace ProductPriceCalculator.ViewModels
                     subproduct.Id = _databaseManager.SaveSubproduct(subproductDb);
                 }
 
-                _dialogService.ShowMessage(
+                // Show success notification in status bar
+                _statusNotificationService.ShowSuccess(
                     IsComponent ? Localization.Get("MsgComponentSaved") : Localization.Get("MsgProductSaved"));
             }
             catch (Exception ex)
@@ -471,21 +492,20 @@ namespace ProductPriceCalculator.ViewModels
                 double componentCost = costPerUnit * unitsNeeded;
 
                 string description = unitsPerPackage > 1
-                    ? $"Base: {Localization.FormatCurrency(fullProduct.BaseCost)}, +{fullProduct.Markup}% = {Localization.FormatCurrency(productPriceAfterMarkup)}, +{fullProduct.TaxRate}% = {Localization.FormatCurrency(packagePrice)} package ÷ {unitsPerPackage} units = {Localization.FormatCurrency(costPerUnit)}/unit × {unitsNeeded} = {Localization.FormatCurrency(componentCost)}"
-                    : $"Base: {Localization.FormatCurrency(fullProduct.BaseCost)}, Markup: {fullProduct.Markup}%, Tax: {fullProduct.TaxRate}%, Final: {Localization.FormatCurrency(packagePrice)} × {unitsNeeded}";
+                    ? $"{Localization.Get("DescBase")}: {Localization.FormatCurrency(fullProduct.BaseCost)}, +{fullProduct.Markup}% = {Localization.FormatCurrency(productPriceAfterMarkup)}, +{fullProduct.TaxRate}% = {Localization.FormatCurrency(packagePrice)} {Localization.Get("DescPackage")} ÷ {unitsPerPackage} {Localization.Get("DescUnits")} = {Localization.FormatCurrency(costPerUnit)}{Localization.Get("DescPerUnit")} × {unitsNeeded} = {Localization.FormatCurrency(componentCost)}"
+                    : $"{Localization.Get("DescBase")}: {Localization.FormatCurrency(fullProduct.BaseCost)}, {Localization.Get("DescMarkup")}: {fullProduct.Markup}%, {Localization.Get("DescTax")}: {fullProduct.TaxRate}%, {Localization.Get("DescFinal")}: {Localization.FormatCurrency(packagePrice)} × {unitsNeeded}";
 
                 Subproducts.Add(new Subproduct
                 {
                     Name = unitsPerPackage > 1
-                        ? $"{selectedComponent.Name} ({unitsNeeded} units)"
-                        : $"{selectedComponent.Name} (x{unitsNeeded})",
+                        ? $"{selectedComponent.Name} ({unitsNeeded} {Localization.Get("DescUnits")})"
+                        : $"{selectedComponent.Name} (×{unitsNeeded})",
                     Description = description,
                     Cost = componentCost,
                     TaxRate = 0
                 });
 
                 RecalculatePrice();
-                _dialogService.ShowMessage("? Component added!\n? Komponente hinzugefügt!");
             }
         }
 

@@ -22,12 +22,18 @@
                   IsReadOnly="True"
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding ProductCategory}" Width="120"/>
-                <DataGridTextColumn Header="Company" Binding="{Binding Company}" Width="120"/>
-                <DataGridTextColumn Header="Base Cost" Binding="{Binding BaseCost, Converter={StaticResource CurrencyConverter}}" Width="100"/>
-                <DataGridTextColumn Header="Markup %" Binding="{Binding Markup, StringFormat=F0}" Width="80"/>
-                <DataGridTextColumn Header="Expected Units" Binding="{Binding ExpectedMonthlyUnits, StringFormat=F0}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColProductName, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColProductCategory, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding ProductCategory}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColCompany, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Company}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding BaseCost, Converter={StaticResource CurrencyConverter}}" Width="100"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColMarkup, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Markup, StringFormat=F0}" Width="80"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColExpectedUnits, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding ExpectedMonthlyUnits, StringFormat=F0}" Width="120"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -67,11 +73,16 @@
                   IsReadOnly="True"
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Component Name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding ProductCategory}" Width="120"/>
-                <DataGridTextColumn Header="Company" Binding="{Binding Company}" Width="120"/>
-                <DataGridTextColumn Header="Base Cost" Binding="{Binding BaseCost, Converter={StaticResource CurrencyConverter}}" Width="100"/>
-                <DataGridTextColumn Header="Units/Package" Binding="{Binding UnitsPerPackage, StringFormat=F0}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColComponentName, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColProductCategory, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding ProductCategory}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColCompany, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding Company}" Width="120"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding BaseCost, Converter={StaticResource CurrencyConverter}}" Width="100"/>
+                <DataGridTextColumn Header="{Binding DataContext.ColUnitsPerPackage, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                    Binding="{Binding UnitsPerPackage, StringFormat=F0}" Width="120"/>
             </DataGrid.Columns>
         </DataGrid>
 

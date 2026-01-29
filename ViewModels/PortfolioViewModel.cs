@@ -31,6 +31,9 @@ namespace ProductPriceCalculator.ViewModels
             
             InitializeCommands();
             LoadProducts();
+            
+            // Subscribe to language changes (Issue #2 & #3)
+            Localization.OnLanguageChanged += OnLanguageChanged;
         }
 
         #region Properties
@@ -143,6 +146,30 @@ namespace ProductPriceCalculator.ViewModels
             {
                 _dialogService.ShowError($"Error calculating portfolio: {ex.Message}");
             }
+        }
+
+        private void OnLanguageChanged()
+        {
+            // Notify all localized properties to refresh
+            OnPropertyChanged(nameof(HeaderProductPortfolio));
+            OnPropertyChanged(nameof(InfoPortfolio));
+            OnPropertyChanged(nameof(HeaderProductSelection));
+            OnPropertyChanged(nameof(InfoSelectProducts));
+            OnPropertyChanged(nameof(ColSelected));
+            OnPropertyChanged(nameof(ColProduct));
+            OnPropertyChanged(nameof(ColBaseCost));
+            OnPropertyChanged(nameof(ColMarkup));
+            OnPropertyChanged(nameof(ColExpectedUnits));
+            OnPropertyChanged(nameof(ButtonCalculatePortfolio));
+            OnPropertyChanged(nameof(HeaderPortfolioAnalysis));
+            OnPropertyChanged(nameof(LabelTotalPortfolioUnits));
+            OnPropertyChanged(nameof(LabelDistributedOperatingCost));
+            OnPropertyChanged(nameof(ColProductName));
+            OnPropertyChanged(nameof(ColPercentage));
+            OnPropertyChanged(nameof(ColOperatingCostPerUnit));
+            OnPropertyChanged(nameof(ColFinalPrice));
+            OnPropertyChanged(nameof(ColProfit));
+            OnPropertyChanged(nameof(LabelPerMonth));
         }
 
         #endregion

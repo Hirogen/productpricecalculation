@@ -2,19 +2,22 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ProductPriceCalculator.Infrastructure;
 using ProductPriceCalculator.Models;
+using ProductPriceCalculator.Services;
 
 namespace ProductPriceCalculator.ViewModels
 {
     public class CategoriesViewModel : ViewModelBase
     {
         private readonly DatabaseManager _databaseManager;
+        private readonly IStatusNotificationService _statusNotificationService;
         private ProductCategoryDb _selectedCategory;
         private string _newCategoryName;
         private string _newCategoryDescription;
 
-        public CategoriesViewModel(DatabaseManager databaseManager)
+        public CategoriesViewModel(DatabaseManager databaseManager, IStatusNotificationService statusNotificationService)
         {
             _databaseManager = databaseManager;
+            _statusNotificationService = statusNotificationService;
             Categories = new ObservableCollection<ProductCategoryDb>(_databaseManager.GetProductCategories());
             AddCategoryCommand = new RelayCommand(AddCategory, CanAddCategory);
             DeleteCategoryCommand = new RelayCommand(DeleteCategory, () => SelectedCategory != null);
@@ -67,6 +70,8 @@ namespace ProductPriceCalculator.ViewModels
             Categories.Add(category);
             NewCategoryName = string.Empty;
             NewCategoryDescription = string.Empty;
+            
+            _statusNotificationService.ShowSuccess(Localization.Get("MsgCategorySaved"));
         }
 
         private void DeleteCategory()
@@ -82,7 +87,7 @@ namespace ProductPriceCalculator.ViewModels
             {
                 _databaseManager.DeleteProductCategory(SelectedCategory.Id);
                 Categories.Remove(SelectedCategory);
-                Services.LocalizedMessageBox.ShowInformation(Localization.Get("MsgCategoryDeleted"));
+                _statusNotificationService.ShowSuccess(Localization.Get("MsgCategoryDeleted"));
             }
         }
 

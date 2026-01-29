@@ -12,16 +12,22 @@ namespace ProductPriceCalculator.ViewModels
     {
         private readonly DatabaseManager _databaseManager;
         private readonly IDialogService _dialogService;
+        private readonly IStatusNotificationService _statusNotificationService;
         private readonly PriceCalculationService _calculationService;
 
         private ViewModelBase _currentViewModel;
+        private StatusBarViewModel _statusBarViewModel;
         private string _currentLanguage;
 
         public MainViewModel()
         {
             _databaseManager = new DatabaseManager();
             _dialogService = new DialogService();
+            _statusNotificationService = new StatusNotificationService();
             _calculationService = new PriceCalculationService();
+
+            // Initialize status bar
+            StatusBarVM = new StatusBarViewModel(_statusNotificationService);
 
             // Initialize localization
             Localization.InitializeFromSystemCulture();
@@ -40,6 +46,12 @@ namespace ProductPriceCalculator.ViewModels
         {
             get => _currentViewModel;
             set => SetProperty(ref _currentViewModel, value);
+        }
+
+        public StatusBarViewModel StatusBarVM
+        {
+            get => _statusBarViewModel;
+            private set => SetProperty(ref _statusBarViewModel, value);
         }
 
         public string WindowTitle => Localization.Get("AppTitle");
@@ -101,13 +113,13 @@ namespace ProductPriceCalculator.ViewModels
 
         public void NavigateToProducts()
         {
-            var viewModel = new ProductsViewModel(_databaseManager, _dialogService, NavigateToCalculation);
+            var viewModel = new ProductsViewModel(_databaseManager, _dialogService, _statusNotificationService, NavigateToCalculation);
             CurrentViewModel = viewModel;
         }
 
         public void NavigateToCalculation(long productId, bool isComponent)
         {
-            var viewModel = new CalculationViewModel(_databaseManager, _dialogService, _calculationService);
+            var viewModel = new CalculationViewModel(_databaseManager, _dialogService, _statusNotificationService, _calculationService);
             
             if (productId > 0)
             {
@@ -123,7 +135,7 @@ namespace ProductPriceCalculator.ViewModels
 
         public void NavigateToOperatingCosts()
         {
-            var viewModel = new OperatingCostsViewModel(_databaseManager, _dialogService);
+            var viewModel = new OperatingCostsViewModel(_databaseManager, _dialogService, _statusNotificationService);
             CurrentViewModel = viewModel;
         }
 
@@ -135,13 +147,13 @@ namespace ProductPriceCalculator.ViewModels
 
         public void NavigateToCategories()
         {
-            var viewModel = new CategoriesViewModel(_databaseManager);
+            var viewModel = new CategoriesViewModel(_databaseManager, _statusNotificationService);
             CurrentViewModel = viewModel;
         }
 
         public void NavigateToCompanies()
         {
-            var viewModel = new CompaniesViewModel(_databaseManager);
+            var viewModel = new CompaniesViewModel(_databaseManager, _statusNotificationService);
             CurrentViewModel = viewModel;
         }
 
