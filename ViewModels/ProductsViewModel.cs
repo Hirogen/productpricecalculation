@@ -38,6 +38,9 @@ namespace ProductPriceCalculator.ViewModels
 
             InitializeCommands();
             LoadProducts();
+            
+            // Subscribe to language changes
+            Localization.OnLanguageChanged += OnLanguageChanged;
         }
 
         #region Properties
@@ -207,5 +210,28 @@ namespace ProductPriceCalculator.ViewModels
         }
 
         #endregion
+
+        private void OnLanguageChanged()
+        {
+            // Refresh all localized properties for header updates
+            OnPropertyChanged(nameof(HeaderProducts));
+            OnPropertyChanged(nameof(HeaderComponents));
+            OnPropertyChanged(nameof(ButtonNewProduct));
+            OnPropertyChanged(nameof(ButtonLoadProduct));
+            OnPropertyChanged(nameof(ButtonDeleteProduct));
+            OnPropertyChanged(nameof(ButtonConvertToComponent));
+            OnPropertyChanged(nameof(ButtonNewComponent));
+            OnPropertyChanged(nameof(ButtonLoadComponent));
+            OnPropertyChanged(nameof(ButtonDeleteComponent));
+            OnPropertyChanged(nameof(ButtonConvertToProduct));
+            OnPropertyChanged(nameof(ColProductName));
+            OnPropertyChanged(nameof(ColProductCategory));
+            OnPropertyChanged(nameof(ColCompany));
+            OnPropertyChanged(nameof(ColComponentName));
+            OnPropertyChanged(nameof(ColUnitsPerPackage));
+            OnPropertyChanged(nameof(ColBaseCost));
+            OnPropertyChanged(nameof(ColMarkup));
+            OnPropertyChanged(nameof(ColExpectedUnits));
+        }
     }
 }

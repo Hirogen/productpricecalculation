@@ -88,6 +88,7 @@
             <Style TargetType="DataGrid">
                 <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
                 <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="ColumnHeaderHeight" Value="35"/>
                 <Setter Property="GridLinesVisibility" Value="Horizontal"/>
                 <Setter Property="HorizontalGridLinesBrush" Value="LightGray"/>
                 <Setter Property="BorderBrush" Value="LightGray"/>
@@ -95,16 +96,51 @@
                 <Setter Property="CanUserAddRows" Value="False"/>
                 <Setter Property="CanUserDeleteRows" Value="False"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="FontSize" Value="12"/>
             </Style>
 
-            <!-- DataGrid Header Style -->
+            <!-- DataGrid Header Style - Default Colors with Proper Template -->
             <Style TargetType="DataGridColumnHeader">
-                <Setter Property="Background" Value="#E6E6E6"/>
-                <Setter Property="Foreground" Value="Black"/>
-                <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="Background" Value="#E5E5E5"/>
+                <Setter Property="Foreground" Value="#1E1E1E"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Height" Value="32"/>
+                <Setter Property="BorderBrush" Value="#CCCCCC"/>
                 <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                <Setter Property="Padding" Value="8,0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridColumnHeader">
+                            <Grid>
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                                </Border>
+                                <Thumb x:Name="PART_RightHeaderGripper"
+                                       HorizontalAlignment="Right"
+                                       Width="3"
+                                       Cursor="SizeWE"
+                                       Background="Transparent"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D0D0D0"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#C0C0C0"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <!-- TextBox Style -->

@@ -5,7 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Proxy element to allow DataGrid columns to access the DataContext -->
+        <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+    </UserControl.Resources>
+    
     <StackPanel>
+        <!-- Hidden ContentControl to place proxy in visual tree -->
+        <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+        
         <!-- Header -->
         <TextBlock Text="{Binding HeaderProductPortfolio}"
                    FontSize="20"
@@ -42,22 +50,22 @@
                   Height="200"
                   Margin="0,0,0,15">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="{Binding DataContext.ColSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                <DataGridCheckBoxColumn Header="{Binding DataContext.ColSelected, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" 
                                         Width="80"/>
-                <DataGridTextColumn Header="{Binding DataContext.ColProduct, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                <DataGridTextColumn Header="{Binding DataContext.ColProduct, Source={StaticResource ProxyElement}}" 
                                     Binding="{Binding Product.Name}" 
                                     Width="*" 
                                     IsReadOnly="True"/>
-                <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                <DataGridTextColumn Header="{Binding DataContext.ColBaseCost, Source={StaticResource ProxyElement}}" 
                                     Binding="{Binding Product.BaseCost, Converter={StaticResource CurrencyConverter}}" 
                                     Width="100" 
                                     IsReadOnly="True"/>
-                <DataGridTextColumn Header="{Binding DataContext.ColMarkup, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                <DataGridTextColumn Header="{Binding DataContext.ColMarkup, Source={StaticResource ProxyElement}}" 
                                     Binding="{Binding Product.Markup, StringFormat=F0}" 
                                     Width="80" 
                                     IsReadOnly="True"/>
-                <DataGridTextColumn Header="{Binding DataContext.ColExpectedUnits, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                <DataGridTextColumn Header="{Binding DataContext.ColExpectedUnits, Source={StaticResource ProxyElement}}" 
                                     Binding="{Binding Product.ExpectedMonthlyUnits, StringFormat=F0}" 
                                     Width="130" 
                                     IsReadOnly="True"/>
@@ -107,22 +115,22 @@
                       Margin="0,0,0,15"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding DataContext.ColProductName, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColProductName, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding ProductName}" 
                                         Width="*"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColExpectedUnits, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColExpectedUnits, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding ExpectedUnits, StringFormat=F0}" 
                                         Width="120"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColPercentage, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColPercentage, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding Percentage, StringFormat=F1}" 
                                         Width="90"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColOperatingCostPerUnit, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColOperatingCostPerUnit, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding OperatingCostPerUnit, Converter={StaticResource CurrencyConverter}}" 
                                         Width="120"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColFinalPrice, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColFinalPrice, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding FinalPrice, Converter={StaticResource CurrencyConverter}}" 
                                         Width="100"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColProfit, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColProfit, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding ProfitPerUnit, Converter={StaticResource CurrencyConverter}}" 
                                         Width="100"/>
                 </DataGrid.Columns>

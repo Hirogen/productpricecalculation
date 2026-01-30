@@ -31,6 +31,9 @@ namespace ProductPriceCalculator.ViewModels
 
             InitializeCommands();
             LoadOperatingCosts();
+            
+            // Subscribe to language changes
+            Localization.OnLanguageChanged += OnLanguageChanged;
         }
 
         #region Properties
@@ -169,6 +172,24 @@ namespace ProductPriceCalculator.ViewModels
                     _dialogService.ShowError($"Error deleting cost: {ex.Message}");
                 }
             }
+        }
+        
+        private void OnLanguageChanged()
+        {
+            // Refresh all localized properties including table headers
+            OnPropertyChanged(nameof(HeaderOperatingCosts));
+            OnPropertyChanged(nameof(InfoOperatingCostsBanner));
+            OnPropertyChanged(nameof(HeaderAddNewCost));
+            OnPropertyChanged(nameof(LabelCostName));
+            OnPropertyChanged(nameof(LabelAmount));
+            OnPropertyChanged(nameof(LabelIsMonthly));
+            OnPropertyChanged(nameof(ButtonAddCost));
+            OnPropertyChanged(nameof(HeaderCurrentCosts));
+            OnPropertyChanged(nameof(ColName));
+            OnPropertyChanged(nameof(ColAmount));
+            OnPropertyChanged(nameof(ColType));
+            OnPropertyChanged(nameof(LabelTotalMonthlyCosts));
+            OnPropertyChanged(nameof(ButtonDeleteCost));
         }
 
         #endregion

@@ -5,7 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Proxy element to allow DataGrid columns to access the DataContext -->
+        <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+    </UserControl.Resources>
+    
     <StackPanel>
+        <!-- Hidden ContentControl to place proxy in visual tree -->
+        <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+        
         <!-- Header -->
         <TextBlock FontSize="20" FontWeight="Bold" Margin="0,0,0,10">
             <TextBlock.Text>
@@ -157,11 +165,11 @@
                       Margin="0,0,0,10"
                       IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding DataContext.ColComponentName, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColComponentName, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding Name}" Width="200"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColCost, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColCost, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding Cost, Converter={StaticResource CurrencyConverter}}" Width="100"/>
-                    <DataGridTextColumn Header="{Binding DataContext.ColDescription, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    <DataGridTextColumn Header="{Binding DataContext.ColDescription, Source={StaticResource ProxyElement}}" 
                                         Binding="{Binding Description}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

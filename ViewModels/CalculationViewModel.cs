@@ -52,6 +52,9 @@ namespace ProductPriceCalculator.ViewModels
             InitializeCommands();
             LoadOperatingCosts();
             LoadCategoriesAndCompanies();
+            
+            // Subscribe to language changes
+            Localization.OnLanguageChanged += OnLanguageChanged;
         }
 
         #region Properties
@@ -520,6 +523,58 @@ namespace ProductPriceCalculator.ViewModels
                 }
                 RecalculatePrice();
             }
+        }
+        
+        private void OnLanguageChanged()
+        {
+            // Refresh all localized properties including table headers
+            OnPropertyChanged(nameof(LabelProductName));
+            OnPropertyChanged(nameof(LabelProductCategory));
+            OnPropertyChanged(nameof(LabelCompany));
+            OnPropertyChanged(nameof(LabelPurchaseLink));
+            OnPropertyChanged(nameof(LabelBaseCost));
+            OnPropertyChanged(nameof(LabelMarkup));
+            OnPropertyChanged(nameof(LabelTaxRate));
+            OnPropertyChanged(nameof(LabelUnitsPerPackage));
+            OnPropertyChanged(nameof(LabelQuantity));
+            OnPropertyChanged(nameof(LabelExpectedUnits));
+            OnPropertyChanged(nameof(InfoBulkPricing));
+            OnPropertyChanged(nameof(ButtonManageOperatingCosts));
+            OnPropertyChanged(nameof(InfoComponentPricing));
+            OnPropertyChanged(nameof(ButtonManageOperatingCostsIcon));
+            OnPropertyChanged(nameof(HeaderComponentsUsed));
+            OnPropertyChanged(nameof(ButtonAddComponent));
+            OnPropertyChanged(nameof(ButtonDeleteSelected));
+            OnPropertyChanged(nameof(ButtonSave));
+            OnPropertyChanged(nameof(ButtonShowDetails));
+            OnPropertyChanged(nameof(HeaderPriceCalculationResult));
+            OnPropertyChanged(nameof(LabelFinalPricePerUnit));
+            OnPropertyChanged(nameof(LabelTotalPrice));
+            OnPropertyChanged(nameof(LabelProfitPerUnit));
+            OnPropertyChanged(nameof(LabelGrossMargin));
+            OnPropertyChanged(nameof(LabelTotalMonthlyOperatingCosts));
+            OnPropertyChanged(nameof(LabelExpectedMonthlyUnits));
+            OnPropertyChanged(nameof(LabelCostPerUnit));
+            OnPropertyChanged(nameof(InfoOperatingCostsAddedBeforeMarkup));
+            OnPropertyChanged(nameof(LabelCalculation));
+            OnPropertyChanged(nameof(InfoCreatingComponentBanner));
+            OnPropertyChanged(nameof(HeaderDetailedCalculationBreakdown));
+            OnPropertyChanged(nameof(LabelSubproductsTotal));
+            OnPropertyChanged(nameof(LabelTotalDirectCost));
+            OnPropertyChanged(nameof(ColName));
+            OnPropertyChanged(nameof(ColComponentName));
+            OnPropertyChanged(nameof(ColCost));
+            OnPropertyChanged(nameof(ColDescription));
+            OnPropertyChanged(nameof(ResultCostBreakdown));
+            OnPropertyChanged(nameof(ResultBaseCost));
+            OnPropertyChanged(nameof(ResultOperatingCostPerUnit));
+            OnPropertyChanged(nameof(ResultPricing));
+            OnPropertyChanged(nameof(ResultAfterMarkup));
+            OnPropertyChanged(nameof(ResultAfterTax));
+            OnPropertyChanged(nameof(ResultSummary));
+            OnPropertyChanged(nameof(ResultFinalUnitPrice));
+            OnPropertyChanged(nameof(ResultQuantity));
+            OnPropertyChanged(nameof(ResultTotalPrice));
         }
 
         #endregion
